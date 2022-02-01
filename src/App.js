@@ -6,18 +6,23 @@ class App extends React.Component {
     super();
     this.state = {
       loading: true,
-      name: "france",
+      name: "",
       capital: "",
       flag: "",
       populaion: "",
       region: "",
     };
-    this.changeCountryBrazil = this.changeCountryBrazil.bind(this);
-    this.changeCountryFrance = this.changeCountryFrance.bind(this);
-    this.changeCountryCroatia = this.changeCountryCroatia.bind(this);
-    this.getCountry = this.getCountry.bind(this);
-  }
 
+    this.getCountry = this.getCountry.bind(this);
+    this.startLoading = this.startLoading.bind(this);
+    this.loaded = this.loaded.bind(this);
+  }
+  async startLoading() {
+    await this.setState({ loading: true });
+  }
+  async loaded() {
+    await this.setState({ loading: false });
+  }
   componentDidMount() {
     fetch("https://restcountries.com/v3.1/name/france")
       .then((res) => res.json())
@@ -30,11 +35,13 @@ class App extends React.Component {
           population: res[0].population,
           region: res[0].region,
         });
-      });
+      })
+      .then(this.loaded);
   }
 
-  getCountry(country) {
-    fetch("https://restcountries.com/v3.1/name/" + this.state.name)
+  async getCountry(country) {
+    await this.setState({ name: country });
+    await fetch("https://restcountries.com/v3.1/name/" + this.state.name)
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -45,29 +52,17 @@ class App extends React.Component {
           population: res[0].population,
           region: res[0].region,
         });
-      });
-    console.log(this.state.capital);
-  }
-  changeCountryFrance(country) {
-    this.setState({ name: country });
-    this.getCountry(country);
-  }
-  changeCountryBrazil(country) {
-    this.setState({ name: country });
-    this.getCountry(country);
-  }
-  changeCountryCroatia(country) {
-    this.setState({ name: country });
-    this.getCountry(country);
+      })
+      .then(this.loaded);
   }
 
   render() {
     if (this.state.loading === false) {
       return (
         <>
-          <Button onClick={this.changeCountryFrance}>France</Button>
-          <Button onClick={this.changeCountryBrazil}>Brazil</Button>
-          <Button onClick={this.changeCountryCroatia}>Croatia</Button>
+          <Button onClick={this.getCountry}>France</Button>
+          <Button onClick={this.getCountry}>Brazil</Button>
+          <Button onClick={this.getCountry}>Croatia</Button>
           <p>
             Pays: {this.state.name} <br />
             Capital: {this.state.capital} <br />

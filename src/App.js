@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./components/Button";
+import Card from "./components/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 class App extends React.Component {
   constructor() {
@@ -63,19 +64,14 @@ class App extends React.Component {
           <Button onClick={this.getCountry}>France</Button>
           <Button onClick={this.getCountry}>Brazil</Button>
           <Button onClick={this.getCountry}>Croatia</Button>
-          <p>
-            Pays: {this.state.name} <br />
-            Capital: {this.state.capital} <br />
-            Drapeau:{" "}
-            <img
-              src={this.state.flag}
-              alt={`Drapeau de ${this.state.name}`}
-            />{" "}
-            <br />
-            Population:{this.state.population}
-            <br />
-            Region: {this.state.region}
-          </p>
+
+          <Card
+            name={this.state.name}
+            capital={this.state.capital}
+            flag={this.state.flag}
+            populaion={this.state.population}
+            region={this.state.region}
+          />
         </>
       );
     } else if (this.state.loading === true) {

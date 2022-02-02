@@ -5,7 +5,9 @@ class Button extends React.Component {
     return (
       <>
         <button
+          className="btn btn-primary"
           onClick={() => this.props.onClick(this.props.children.toLowerCase())}
+          style={{ marginLeft: 30, marginRight: 30 }}
         >
           {this.props.children}
         </button>

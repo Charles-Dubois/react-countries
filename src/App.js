@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./components/Button";
 import Card from "./components/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 class App extends React.Component {
   constructor() {
     super();
@@ -60,19 +61,23 @@ class App extends React.Component {
   render() {
     if (this.state.loading === false) {
       return (
-        <>
-          <Button onClick={this.getCountry}>France</Button>
-          <Button onClick={this.getCountry}>Brazil</Button>
-          <Button onClick={this.getCountry}>Croatia</Button>
-
-          <Card
-            name={this.state.name}
-            capital={this.state.capital}
-            flag={this.state.flag}
-            populaion={this.state.population}
-            region={this.state.region}
-          />
-        </>
+        <div>
+          <h1>Country selector</h1>
+          <div className="myButton d-flex justify-content-center ">
+            <Button onClick={this.getCountry}>France</Button>
+            <Button onClick={this.getCountry}>Brazil</Button>
+            <Button onClick={this.getCountry}>Croatia</Button>
+          </div>
+          <div className="d-flex justify-content-center">
+            <Card
+              name={this.state.name}
+              capital={this.state.capital}
+              flag={this.state.flag}
+              population={this.state.population}
+              region={this.state.region}
+            />
+          </div>
+        </div>
       );
     } else if (this.state.loading === true) {
       return <h1>Loading</h1>;

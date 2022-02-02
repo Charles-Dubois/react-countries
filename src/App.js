@@ -1,8 +1,10 @@
 import React from "react";
 import Button from "./components/Button";
 import Card from "./components/Card";
+import SearchBar from "./components/SearchBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
 class App extends React.Component {
   constructor() {
     super();
@@ -67,10 +69,12 @@ class App extends React.Component {
       return (
         <div>
           <h1>Country selector</h1>
+
           <div className="myButton d-flex justify-content-center ">
-            <Button onClick={this.getCountry}>France</Button>
+            <SearchBar onClick={this.getCountry} />
+            {/* <Button onClick={this.getCountry}>France</Button>
             <Button onClick={this.getCountry}>Brazil</Button>
-            <Button onClick={this.getCountry}>Croatia</Button>
+            <Button onClick={this.getCountry}>Croatia</Button> */}
           </div>
           <div className="d-flex justify-content-center">
             <Card

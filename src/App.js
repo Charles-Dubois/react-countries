@@ -19,11 +19,12 @@ class App extends React.Component {
     this.startLoading = this.startLoading.bind(this);
     this.loaded = this.loaded.bind(this);
   }
-  async startLoading() {
-    await this.setState({ loading: true });
+
+  startLoading() {
+    this.setState({ loading: true });
   }
-  async loaded() {
-    await this.setState({ loading: false });
+  loaded() {
+    this.setState({ loading: false });
   }
   componentDidMount() {
     fetch("https://restcountries.com/v3.1/name/france")
@@ -40,22 +41,25 @@ class App extends React.Component {
       })
       .then(this.loaded);
   }
-
-  async getCountry(country) {
-    await this.setState({ name: country });
-    await fetch("https://restcountries.com/v3.1/name/" + this.state.name)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          name: res[0].name.common,
-          capital: res[0].capital[0],
-          flag: res[0].flags.svg,
-          population: res[0].population,
-          region: res[0].region,
-        });
-      })
-      .then(this.loaded);
+  getCountry(country) {
+    this.setState({ name: country });
+    this.startLoading();
+  }
+  componentDidUpdate(_prevProps, prevState) {
+    if (prevState.name !== this.state.name) {
+      fetch("https://restcountries.com/v3.1/name/" + this.state.name)
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({
+            name: res[0].name.common,
+            capital: res[0].capital[0],
+            flag: res[0].flags.png,
+            population: res[0].population,
+            region: res[0].region,
+          });
+        })
+        .then(this.loaded);
+    }
   }
 
   render() {
